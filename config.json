@@ -1,0 +1,9 @@
+{
+    "input": {
+        "maxlength": 100,
+        "index": 3
+    },
+    "send": {
+        "clsName": "CheatBtn"
+    }
+}

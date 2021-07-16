@@ -1,0 +1,13 @@
+{
+  "name": "kkutu",
+  "version": "1.4.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "jquery": "^3.6.0",
+    "node-machine-id": "^1.1.12",
+    "sqlite3": "^5.0.2"
+  }
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    window.$ = require("jquery");
+  </script>
+  <script src="src.js"></script>
+  <title>끄투코리아 핵</title>
+  <link href="style/index.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="main-container">
+  <div class="contentWrapper" id="contentWrapper">
+    <webview allowpopups id="content" ng-style="style"
+             preload="./webview-preload.js"
+             src="https://kkutu.co.kr"
+             useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36"></webview>
+    <script>
+      window.webview = document.getElementById("content");
+      load();
+    </script>
+  </div>
+
+  <div id="controlBox">
+    <label>모드 변경</label>
+    <select class="mode" name="mode">
+      <option selected value="normal">한국어/영어 끝말잇기</option>
+      <option value="threeWord">쿵쿵따(미지원)</option>
+      <option value="reverse">앞말잇기(미지원)</option>
+      <option value="wordMatch">단어대결(미지원)</option>
+    </select><br>
+
+    <div id="accessBox" style="margin-top: 10px;">
+      <div class="input-button-group">
+        <input id="textarea"/>
+        <button onclick="$('#textarea').submit();">전송</button>
+      </div>
+
+      <input id="chkAutoRun" type="checkbox"/>
+      <label for="chkAutoRun">자동입력 활성화</label>
+
+      <input id="chkOptimization" type="checkbox"/>
+      <label for="chkOptimization" title="검색된 단어들을 표시하지 않습니다.">최적화모드</label>
+
+      <input checked id="chkLog" type="checkbox"/>
+      <label for="chkLog">로그 띄우기</label><br/>
+
+      <label id="turn">myTurn: </label><br/>
+    </div>
+
+    <div style="margin-top: 20px;">
+    </div>
+
+    <label style="font-size: medium;">로그</label>
+    <textarea class="logBox" id="logbox" readonly></textarea>
+
+    <div style="margin-top: 20px;"></div>
+    <label for="verificationWord">단어검증</label>
+    <div class="input-button-group">
+      <input id="verificationWord"/>
+      <button onclick="$('#verificationWord').submit();">검증</button>
+    </div>
+
+    <label for="searchWordInput">단어 수동검색</label>
+    <div class="input-button-group">
+      <input id="searchWordInput"/>
+      <button onclick="$('#searchWordInput').submit();">검색</button>
+      <br/>
+    </div>
+
+    <label style="font-size: medium;">검색된 단어</label><br/>
+    <label id="elapsed" style="color: darkgray;">소요시간: </label><br/>
+    <table id="passList" style="width: 420px;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>단어</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="wordManagerForm" id="wordManagerForm">
+  <label>모드 변경</label><br/>
+
+  <div style="margin-top: 15px; margin-bottom: 15px;">
+    <input checked id="addWord" name="wordMode" type="radio">
+    <label for="addWord">단어 추가</label>
+    <input id="removeWord" name="wordMode" type="radio">
+    <label for="removeWord">단어 삭제</label>
+    <input checked id="checkingWord" type="checkbox">
+    <label for="checkingWord">단어 검증후 처리</label><br/>
+  </div>
+
+  <div>
+    <button onclick="lookupPendingWords();">대기중인 단어 조회</button>
+    <button class="submitButton" id="submitWords" onclick="submitWords();">확정</button>
+    <button id="validateAll" onclick="validateAllWords();">모든단어 검증</button>
+  </div>
+
+  <div id="loadingConatainer" style="display: none;">
+    <progress id="loadingBar" max=100 value=0></progress>
+    <label id="loadingText"></label><br/>
+    <input onclick="preventCheckWords();" type="button" value="검증 취소"/>
+  </div>
+  <textarea class="wordForm" id="editWord"></textarea>
+</div>
+</body>
